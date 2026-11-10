@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>level2_1</title></head>
+<body>
+<h1 class="title">Level 2-1</h1>
+<nav><a href="level3_x.html">Level 3 X</a></nav>
+
+<!-- nested table: an outer table whose cell contains another table -->
+<table id="nested-table">
+    <tr>
+        <th>name</th>
+        <th>score</th>
+        <th>note</th>
+    </tr>
+    <tr>
+        <td>
+            <table class="inner">
+                <tr><td>alice</td></tr>
+                <tr><td>bob</td></tr>
+            </table>
+        </td>
+        <td>10</td>
+        <!-- missing cell: no <td> for "note" -> must be None, row kept -->
+    </tr>
+    <tr>
+        <td>carol</td>
+        <td>8</td>
+        <td></td>
+    </tr>
+</table>
+</body>
+</html>

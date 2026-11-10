@@ -36,6 +36,10 @@ docs/_build/
 .tox/
 scrapple.egg-info/
 
+# Virtual environments
+.venv/
+venv/
+
 # Example files for tests
 
 tests/project*.py

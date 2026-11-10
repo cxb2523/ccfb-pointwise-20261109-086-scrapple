@@ -19,6 +19,12 @@ class InvalidConfigException(Exception):
 
 def traverse_next(page, nextx, results, tabular_data_headers=[], verbosity=0):
     """
+    .. deprecated::
+        Recursive depth-first traversal kept for backward compatibility.
+        The ``run`` command now uses the breadth-first, checkpoint-backed
+        engine in :mod:`scrapple.utils.crawler`, which enforces the depth
+        limit and supports crash recovery. New code should not call this.
+
     Recursive generator to traverse through the next attribute and \
     crawl through the links to be followed.
 
@@ -69,7 +75,8 @@ def validate_config(config):
     fields = [f for f in get_fields(config)]
     if len(fields) != len(set(fields)):
         raise InvalidConfigException(
-            "Invalid configuration file - %d duplicate field names" % len(fields) - len(set(fields))
+            "Invalid configuration file - %d duplicate field names"
+            % (len(fields) - len(set(fields)))
         )
     return True
 

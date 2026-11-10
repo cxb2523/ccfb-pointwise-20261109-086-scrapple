@@ -21,3 +21,21 @@ def get_command_class(command):
     }
     cmdClass = getattr(commandMapping.get(command), command.title() + 'Command')
     return cmdClass
+
+
+def get_selector_class(selector_type):
+    """
+    Select the selector implementation for ``selector_type`` ("css" or
+    "xpath"). Centralising the dispatch here lets the css/xpath pair be
+    exercised against the same contract in the test suite.
+
+    :param selector_type: ``"css"`` or ``"xpath"`` (case insensitive)
+    :return: The corresponding selector class
+    """
+    from scrapple.selectors.css import CssSelector
+    from scrapple.selectors.xpath import XpathSelector
+    selectorMapping = {
+        'css': CssSelector,
+        'xpath': XpathSelector,
+    }
+    return selectorMapping[selector_type.lower()]
