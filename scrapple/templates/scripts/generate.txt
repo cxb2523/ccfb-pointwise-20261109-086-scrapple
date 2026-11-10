@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
+import os
+
+from scrapple.selectors.{{ config.selector_type }} import {{ config.selector_type|title }}Selector
+
+
+def task_{{ config.project_name }}():
+	"""
+	Script generated using `Scrapple <http://scrappleapp.github.io/scrapple>`_
+	"""
+	results = dict()
+	results['project'] = "{{ config.project_name }}"
+	results['data'] = list()
+	try:
+		r0 = dict()
+		page0 = {{ config.selector_type|title }}Selector("{{ config['scraping']['url'] }}")
+		{%- for attr in config['scraping']['data'] %}
+		{%- if not attr.field == "" %}
+		r0["{{ attr.field }}"] = page0.extract_content("{{ attr.selector }}", "{{ attr.attr }}", "{{ attr.default }}")
+		{%- endif %}
+		{%- endfor %}
+		{%- if config['scraping']['next'] %}
+		{%- for next in config['scraping']['next'] recursive %}
+		
+		for page{{ loop.depth }} in page{{ loop.depth - 1 }}.extract_links("{{ next['follow_link'] }}"):
+			r{{ loop.depth }} = r{{ loop.depth - 1 }}.copy()
+			{%- set outer_loop = loop %}
+			{%- for attr in next['scraping']['data'] %}
+			{%- if not attr.field == "" %}
+			r{{ outer_loop.depth }}["{{ attr.field }}"] = page{{ outer_loop.depth }}.extract_content("{{ attr.selector }}", "{{ attr.attr }}", "{{ attr.default }}")
+			{%- endif %}
+			{%- endfor %}
+			{%- if next['scraping']['next'] %}
+			{{ loop(next['scraping']['next'])|indent(3 + loop.depth , true) }}
+			{%- else %}
+			results['data'].append(r{{ loop.depth }})
+			{%- endif %}
+			{%- endfor %}
+		{%- else %}
+		results['data'].append(r0)
+		{%- endif %}
+	except KeyboardInterrupt:
+		pass
+	except Exception as e:
+		print(e)
+	finally:
+		{%- if config.output_type == 'json' %}
+		import json
+		with open(os.path.join(os.getcwd(), '{{ config.output_file }}.json'), 'w') as f:
+			json.dump(results, f)
+		{%- else %}
+		import csv
+        with open(os.path.join(os.getcwd(), '{{ config.output_file }}.csv'), 'w') as f:
+            fields = {{ config.fields }}
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(results['data'])
+        {%- endif %}
+
+
+if __name__ == '__main__':
+	task_{{ config.project_name }}()

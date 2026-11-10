@@ -1,0 +1,26 @@
+{
+    "project_name": "project2_nba",
+    "selector_type": "css",
+    "scraping": {
+        "url": "https://www.basketball-reference.com/teams/",
+        "data": [
+
+        ],
+        "next": [
+            {
+                "follow_link": "#teams_active th > a",
+                "scraping": {
+                    "data": [
+                        {
+                            "field": "team",
+                            "selector": "div#info h1",
+                            "attr": "text",
+                            "default": "<no_team>",
+                            "connector": ""
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

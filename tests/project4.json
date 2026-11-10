@@ -1,0 +1,32 @@
+{
+	"project_name": "new_project4",
+	"selector_type": "xpath",
+	"scraping": {
+		"url": "http://pyvideo.org/events/boston-python-meetup.html",
+		"data": [
+			{
+				"field": "event",
+				"selector": "//h2",
+				"attr": "text",
+				"connector": "",
+				"default": "<event>"
+			}
+		],
+		"next": [
+			{
+				"follow_link": "//div[@class='content-list']/div[@class='row']//h4[@class='entry-title']/a",
+				"scraping": {
+					"data": [
+						{
+							"field": "talk",
+							"selector": "//h2",
+							"attr": "text",
+							"connector": "",
+							"default": "<talk>"
+						}
+					]
+				}
+			}
+		]
+	}
+}

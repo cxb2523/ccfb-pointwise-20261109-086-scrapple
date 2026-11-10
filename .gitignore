@@ -1,0 +1,57 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Sphinx documentation
+docs/_build/
+
+*/pages/
+
+# Tox
+
+.tox/
+scrapple.egg-info/
+
+# Example files for tests
+
+tests/project*.py
+tests/trial*.json
+tests/result*.json
+trial*.json
+tests/*.csv
+
+# Coverage
+
+.coverage
+coverage.xml
+
+# Pylint
+
+*.dot
+*.png 
+
+.vscode

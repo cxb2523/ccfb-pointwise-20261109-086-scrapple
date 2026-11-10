@@ -1,0 +1,59 @@
+{
+	"project_name": "{{ settings.projectname }}",
+	"selector_type": "{{ settings.selector_type }}",
+	"scraping": {
+		"url": "{{ settings.url }}",
+		"data": [
+			{
+				"field": "",
+				"selector": "",
+				"attr": "",
+				"default": "",
+				"connector": ""
+			}
+		],
+		"table": [
+			{
+				"table_type": "",
+				"header": "",
+				"prefix": "",
+				"suffix": "",
+				"selector": "",
+				"attr": "",
+				"default": "",
+				"connector": ""
+			}
+		],
+		{%- for level in [1] recursive %}
+		"next": [
+			{
+				"follow_link": "",
+				"scraping": {
+					"data": [
+						{
+							"field": "",
+							"selector": "",
+							"attr": "",
+							"default": "",
+							"connector": ""
+						}
+					],
+					"table": [
+						{
+							"table_type": "",
+							"header": "",
+							"prefix": "",
+							"suffix": "",
+							"selector": "",
+							"attr": "",
+							"default": "",
+							"connector": ""
+						}
+					]{%- if level != settings.levels %},{% endif %}
+{%- if level != settings.levels %}{{ loop([level+1]) }}{% endif %}
+				}
+			}
+		]
+		{%- endfor %}
+	}
+}
